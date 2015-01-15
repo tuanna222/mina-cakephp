@@ -6,13 +6,13 @@ namespace :cakephp do
     desc "Setup CakePHP tmp directories."
     task :create do
       cmds = cake_tmp_dirs.map do |d|
-        echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/tmp/#{d}}
+        echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/app/tmp/#{d}}
       end
 
       queue %{
           echo "-----> Setting up CakePHP tmp directories"
           #{cmds.flatten.join("\n")}
-          #{echo_cmd %{chmod -R 777 #{shared_path}/tmp}}
+          #{echo_cmd %{chmod -R 777 #{shared_path}/app/tmp}}
           echo "-----> Done CakePHP"
         }  
     end
@@ -20,7 +20,7 @@ namespace :cakephp do
     desc "Clean caches files"
     task :clean_cache do
       cmds = cake_tmp_dirs.map do |d|
-        echo_cmd %{rm -f #{shared_path}/tmp/#{d}/*} if d =~ /cache/
+        echo_cmd %{rm -f #{shared_path}/app/tmp/#{d}/*} if d =~ /cache/
       end
 
       queue %{
