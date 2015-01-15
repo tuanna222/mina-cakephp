@@ -56,8 +56,8 @@ namespace :cakephp do
 
   queue %{
     echo "-----> Creating CakePHP database config file." && (
-      #{echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/Config}} &&
-      #{echo_cmd %{echo "#{content}" > #{deploy_to}/#{shared_path}/Config/database.php}} &&
+      #{echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/app/Config}} &&
+      #{echo_cmd %{echo "#{content}" > #{deploy_to}/#{shared_path}/app/Config/database.php}} &&
       echo "-----> Done."
     ) || (
       echo "ERROR: Problem to create database config file."
