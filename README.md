@@ -6,8 +6,8 @@ using [Mina] (http://nadarei.co/mina).
 # Getting Start
 
 ## Instalation
-	
-	gem install mina-cakephp
+	git clone https://github.com/tuanna222/mina-cakephp.git
+	cd mina-cakephp && gem build mina-cakephp.gemspec && gem install mina-cakephp-1.0.1.gem
 
 ## Configuration
 
