@@ -1,7 +1,8 @@
 # mina-cakephp
 
-mina-cakephp is a gem that adds many tasks to aid in the deployment of [CakePHP] (http://www.cakephp.org) applications
+mina-cakephp is a gem that adds many tasks to aid in the deployment of [CakePHP v2.x] (http://www.cakephp.org) applications
 using [Mina] (http://nadarei.co/mina).
+For CakePHP v3.x, please go to https://github.com/tuanna222/mina-cakephp3
 
 # Getting Start
 
@@ -64,15 +65,16 @@ To avoid problems we recommend using `Minafile` instead of `config/deploy.rb`
 	    to :launch do
 	    	# If you are using the Migrations plugin of CakeDC
 	    	# you need to invoke this task to run all migrations before launching the application.
-	    	invoke :'cakephp:migrations:run_all'
+	    	#invoke :'cakephp:migrations:run_all'
 	    end
 	  end
 	end
 
 	# Taks to prepare the environment
 	task :setup do
+            invoke :'git:clone'
 	    # Invoke this task if you need to clone CakePHP core when setting up the enviroment.
-	    invoke :'cakephp:git:clone'
+	    #invoke :'cakephp:git:clone'
 	end
 
 ## Setup Environment
