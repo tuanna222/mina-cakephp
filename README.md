@@ -36,18 +36,7 @@ To avoid problems we recommend using `Minafile` instead of `config/deploy.rb`
 	## mina-cakephp Settings
 	# Defines the  CakePHP core path. 
 	# This path is used to execute bake commands and update webroot/index.php if needed.
-	set :cake_path, '/var/www/libs/cakephp'
-	# Database connection settings.
-	# This will be used to create Config/database.php
-	set :cake_database, {
-		'datasource' => 'Database/Mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'user',
-		'password' => 'my-password',
-		'database' => 'my-db',
-		'prefix' => ''
-	}
+	#set :cake_path, '/var/www/libs/cakephp'
 
 	## Deploy Task
 	task :deploy do

@@ -35,29 +35,10 @@ namespace :cakephp do
 
   desc "Configure CakePHP database connection"
   task :config_database do
-    typesWithQuotes = [TrueClass, FalseClass, Numeric]
-
-    config = cake_database.map{|i,v|
-      if typesWithQuotes.find{ |d| v.is_a? d}
-        "\t\t'#{i}' => #{v}"
-      else
-        "\t\t'#{i}' => '#{v}'"
-      end
-    }.join(", \n")
-
-    content = <<-CONTENT.gsub(/^ {6}/, '')
-      <?php
-      class DATABASE_CONFIG{
-        public \\$default = array(
-        #{config}
-        );
-      }
-    CONTENT
-
   queue %{
     echo "-----> Creating CakePHP database config file." && (
       #{echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/app/Config}} &&
-      #{echo_cmd %{echo "#{content}" > #{deploy_to}/#{shared_path}/app/Config/database.php}} &&
+      #{echo_cmd %{cp #{deploy_to}/current/app/Config/database.php #{deploy_to}/#{shared_path}/app/Config/database.php}} &&
       echo "-----> Done."
     ) || (
       echo "ERROR: Problem to create database config file."
