@@ -10,7 +10,7 @@ namespace :cakephp do
 
     queue %{
       echo "-----> Setting up CakePHP path." && (
-        #{echo_cmd %{sed -ri "/#{regex}/ c define('CAKE_CORE_INCLUDE_PATH', '#{cake_path}/lib');"  webroot/index.php }} &&
+        #{echo_cmd %{sed -ri "/#{regex}/ c define('CAKE_CORE_INCLUDE_PATH', '#{cake_path}/lib');"  #{deploy_to}/current/app/webroot/index.php }} &&
         echo "------> Done."
       ) || (
         echo "! ERROR: Setup CakePHP path failed."
@@ -24,7 +24,7 @@ namespace :cakephp do
     regex = "((\\/\\/)?\\s*Configure::write\\('debug',(.*)\\);)"
     queue %{
       echo "-----> Setting up CakePHP debug to 0" && (
-        #{echo_cmd %{sed -ri "/#{regex}/ c Configure::write('debug', 0);" Config/core.php }} &&
+        #{echo_cmd %{sed -ri "/#{regex}/ c Configure::write('debug', 0);" #{deploy_to}/current/app/Config/core.php }} &&
         echo "------> Done."
       ) || (
         echo "! ERROR: Setup CakePHP debug."
@@ -33,21 +33,20 @@ namespace :cakephp do
     }
   end
 
-  desc "Configure CakePHP database connection"
-  task :config_database do
-  queue %{
-    echo "-----> Creating CakePHP database config file." && (
-      #{echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/app/Config}} &&
-      #{echo_cmd %{cp #{deploy_to}/current/app/Config/database.php #{deploy_to}/#{shared_path}/app/Config/database.php}} &&
-      echo "-----> Done."
-    ) || (
-      echo "ERROR: Problem to create database config file."
-    )
-  }
-  end
+#  desc "Configure CakePHP database connection"
+#  task :config_database do
+#  queue %{
+#    echo "-----> Creating CakePHP database config file." && (
+#      #{echo_cmd %{mkdir -p #{deploy_to}/#{shared_path}/app/Config}} &&
+#      echo "-----> Done."
+#    ) || (
+#      echo "ERROR: Problem to create database config file."
+#    )
+#  }
+#  end
 end
 # Adaptive tasks to setup CakePHP Application.
 task :setup do
   invoke :'cakephp:tmp:create'
-  invoke :'cakephp:config_database'
+#  invoke :'cakephp:config_database'
 end

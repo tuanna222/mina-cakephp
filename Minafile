@@ -1,0 +1,42 @@
+require 'mina/git'
+require 'mina-cakephp'
+
+set :domain, '127.0.0.1' 
+set :deploy_to, '/var/www/web_name'
+set :repository, 'http://link/to/git'
+set :user, 'ssh_user'
+
+# Shared file or folder between deploys
+# more at http://nadarei.co/mina/tasks/deploy_link_shared_paths.html
+set :shared_paths, ['tmp']
+
+## mina-cakephp Settings
+# Defines the  CakePHP core path. 
+set :cake_path, '#{deploy_to}/libs/cakephp'
+set :cake_revision, '2.x'
+
+## Deploy Task
+task :deploy do
+  deploy do
+    # Clone project, more at http://nadarei.co/mina/tasks/git_clone.html
+    invoke :'git:clone'
+    # Create symlinks
+    # more at http://nadarei.co/mina/tasks/deploy_link_shared_paths.html
+    invoke :'deploy:link_shared_paths'
+
+    # This task will delete all temporary files at tmp/
+    invoke :'cakephp:tmp:clean_cache'
+
+    to :launch do
+        # If you are using the Migrations plugin of CakeDC
+        # you need to invoke this task to run all migrations before launching the application.
+        #invoke :'cakephp:migrations:run_all'
+    end
+  end
+end
+
+# Taks to prepare the environment
+task :setup do
+    invoke :'cakephp:git:clone'
+end
+
