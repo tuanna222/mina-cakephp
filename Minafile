@@ -8,7 +8,7 @@ set :user, 'ssh_user'
 
 # Shared file or folder between deploys
 # more at http://nadarei.co/mina/tasks/deploy_link_shared_paths.html
-set :shared_paths, ['tmp']
+set :shared_paths, ['app/tmp']
 
 ## mina-cakephp Settings
 # Defines the  CakePHP core path. 
